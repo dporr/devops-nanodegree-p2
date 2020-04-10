@@ -1,0 +1,23 @@
+Description: >
+    Diego Porras. Project 2 services
+    This was created following along the course and editing the necesary
+    parts for project submission.
+Parameters:
+  EnvironmentName:
+      Description: Single Parameter that we are passing with the env name.
+      Type: String
+      Default: Project2
+  InstanceType:
+    Description: Instance type for ec2 resource allocation
+    Type: String
+    Default: t3.micro
+  AmiId:
+    Description: AMI id. Default ubuntu 18.04 LTS
+    Type: String
+    Default: ami-005bdb005fb00e791
+
+Resources:
+  LoadBalancer:
+  AutoscalingGroup:
+  LaunchConfiguration:
+  BastionHost1:
