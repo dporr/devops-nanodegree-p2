@@ -1,5 +1,5 @@
 Description: >
- Following allong course 
+ Following allong course for network resources creation
 Parameters:
   EnvironmentName:
     Description: An environment name that is prefixed to resource names
