@@ -19,36 +19,36 @@ Parameters:
 Resources:
   HTTPSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
-      Properties:
-        GroupDescription: SG for the Web Server
-        VpcId: !Ref VPC
-        SecurityGroupIngress:
-          - IpProtocol: tcp
-            CidrIp: 0.0.0.0/0
-            FromPort: 80
-            ToPort: 80
+    Properties:
+      GroupDescription: SG for the Web Server
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          CidrIp: 0.0.0.0/0
+          FromPort: 80
+          ToPort: 80
 
   SSHSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
-      Properties:
-        GroupDescription: SG for allowing SSH traffic
-        VpcId: !Ref VPC
-        SecurityGroupIngress:
-          - IpProtocol: tcp
-            CidrIp: 0.0.0.0/0
-            FromPort: 22
-            ToPort: 22
+    Properties:
+      GroupDescription: SG for allowing SSH traffic
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          CidrIp: 0.0.0.0/0
+          FromPort: 22
+          ToPort: 22
 
   ServerUpdatesSG:
     Type: 'AWS::EC2::SecurityGroup'
-      Properties:
-        GroupDescription: SG for allowing external traffic for software updates
-        VpcId: !Ref VPC
-        SecurityGroupEgress:
-          - IpProtocol: tcp
-            CidrIp: 0.0.0.0/0
-            FromPort: 0
-            ToPort: 65535
+    Properties:
+      GroupDescription: SG for allowing external traffic for software updates
+      VpcId: !Ref VPC
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          CidrIp: 0.0.0.0/0
+          FromPort: 0
+          ToPort: 65535
 
   LBSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -105,15 +105,15 @@ Resources:
     Properties:
       UserData:
         Fn::Base64: !Sub |
-        #!/bin/bash
-        apt-get update -y
-        apt-get install apache2 unzip awscli -y
-        systemctl start apache2.service
-        cd /var/www/html
-        #aws s3 cp s3://project2-bucket-dporras/udacity.zip .
-        #unzip -o udacity.zip
-        echo "it works! Udagram, Udacity" > index.html
-        echo "Success!" > checkstatus.html
+          #!/bin/bash
+          apt-get update -y
+          apt-get install apache2 unzip awscli -y
+          systemctl start apache2.service
+          cd /var/www/html
+          #aws s3 cp s3://project2-bucket-dporras/udacity.zip .
+          #unzip -o udacity.zip
+          echo "it works! Udagram, Udacity" > index.html
+          echo "Success!" > checkstatus.html
       ImageId: !Ref AmiId
       IamInstanceProfile: !Ref S3ReadOnlyInstanceProfile
       SecurityGroupIds:
