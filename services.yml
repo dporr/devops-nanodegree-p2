@@ -88,7 +88,10 @@ Resources:
         echo "it works! Udagram, Udacity" > index.html
       ImageId: !Ref AmiId
       IamInstanceProfile: !Ref S3ReadOnlyInstanceProfile
-      SecurityGroups: !Ref WebServerSecGroup
+      SecurityGroupIds:
+        - !Ref HTTPSecurityGroup
+        - !Ref SSHSecurityGroup
+        - !Ref ServerUpdatesSG
       InstanceType: !Ref InstanceType
       BlockDeviceMappings:
       - DeviceName: "/dev/sdk"
