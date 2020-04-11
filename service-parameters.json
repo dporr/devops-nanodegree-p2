@@ -1,0 +1,14 @@
+[
+	{
+		"ParameterKey": "EnvironmentName",
+		"ParameterValue": "project-2"
+    },
+    {
+		"ParameterKey": "InstanceType",
+		"ParameterValue": "t3.medium"
+    },
+    {
+        "ParameterKey": "AmiId",
+		"ParameterValue": "ami-005bdb005fb00e791"
+    }
+]
