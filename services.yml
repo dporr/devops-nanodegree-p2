@@ -68,6 +68,33 @@ Resources:
 
   LoadBalancer:
   AutoscalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      VPCZoneIdentifier:
+      - Fn::ImportValue: 
+          !Sub "${EnvironmentName}-PRIV-NETS"
+      LaunchConfigurationName:
+        Ref: WebAppLaunchConfig
+      MinSize: '1'
+      MaxSize: '2'
+      TargetGroupARNs:
+      - Ref: WebAppTargetGroup
+
+  WebAppTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckIntervalSeconds: 10
+      HealthCheckPath: /checkstatus.html
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 8
+      HealthyThresholdCount: 2
+      Port: 80
+      Protocol: HTTP
+      UnhealthyThresholdCount: 5
+      VpcId: 
+        Fn::ImportValue:
+          Fn::Sub: "${EnvironmentName}-VPCID"
+
   S3ReadOnlyInstanceProfile:
     Type: AWS::IAM::InstanceProfile
     Properties: 
@@ -86,6 +113,7 @@ Resources:
         #aws s3 cp s3://project2-bucket-dporras/udacity.zip .
         #unzip -o udacity.zip
         echo "it works! Udagram, Udacity" > index.html
+        echo "Success!" > checkstatus.html
       ImageId: !Ref AmiId
       IamInstanceProfile: !Ref S3ReadOnlyInstanceProfile
       SecurityGroupIds:
