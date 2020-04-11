@@ -74,14 +74,14 @@ Resources:
         ToPort: 80
         CidrIp: 0.0.0.0/0
 
- WebAppLB:
+  WebAppLB:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Subnets:
       - Fn::ImportValue: !Sub "${EnvironmentName}-PUB1-SN"
       - Fn::ImportValue: !Sub "${EnvironmentName}-PUB2-SN"
       SecurityGroups:
-      - Ref: LBSecGroup
+      - Ref: LBSecurityGroup
   Listener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
@@ -104,7 +104,7 @@ Resources:
           Values: [/]
         ListenerArn: !Ref 'Listener'
         Priority: 1
-WebAppTargetGroup:
+  WebAppTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckIntervalSeconds: 35
@@ -118,7 +118,7 @@ WebAppTargetGroup:
       VpcId: 
         Fn::ImportValue:
           Fn::Sub: "${EnvironmentName}-VPCID"
-          
+
   AutoscalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
@@ -177,4 +177,3 @@ WebAppTargetGroup:
       - DeviceName: "/dev/sdk"
         Ebs:
           VolumeSize: '10'
-  BastionHost1:
