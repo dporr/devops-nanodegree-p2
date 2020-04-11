@@ -24,4 +24,23 @@ Resources:
     Properties: 
       Roles: S3ReadOnlyAccessRole
   
+  WebAppLaunchConfig:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      UserData:
+        Fn::Base64: !Sub |
+         #!/bin/bash
+        apt-get update -y
+        apt-get install apache2 -y
+        systemctl start apache2.service
+        cd /var/www/html
+        echo "Udacity Demo Web Server Up and Running!" > index.html
+      ImageId: !Ref AmiId
+      IamInstanceProfile: !Ref S3ReadOnlyInstanceProfile
+      SecurityGroups: !Ref WebServerSecGroup
+      InstanceType: !Ref InstanceType
+      BlockDeviceMappings:
+      - DeviceName: "/dev/sdk"
+        Ebs:
+          VolumeSize: '10'
   BastionHost1:
