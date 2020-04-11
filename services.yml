@@ -19,5 +19,9 @@ Parameters:
 Resources:
   LoadBalancer:
   AutoscalingGroup:
-  LaunchConfiguration:
+  S3ReadOnlyInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties: 
+      Roles: S3ReadOnlyAccessRole
+  
   BastionHost1:
