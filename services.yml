@@ -29,12 +29,14 @@ Resources:
     Properties:
       UserData:
         Fn::Base64: !Sub |
-         #!/bin/bash
+        #!/bin/bash
         apt-get update -y
-        apt-get install apache2 -y
+        apt-get install apache2 unzip awscli -y
         systemctl start apache2.service
         cd /var/www/html
-        echo "Udacity Demo Web Server Up and Running!" > index.html
+        #aws s3 cp s3://project2-bucket-dporras/udacity.zip .
+        #unzip -o udacity.zip
+        echo "it works! Udagram, Udacity" > index.html
       ImageId: !Ref AmiId
       IamInstanceProfile: !Ref S3ReadOnlyInstanceProfile
       SecurityGroups: !Ref WebServerSecGroup
