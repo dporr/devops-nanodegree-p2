@@ -150,7 +150,8 @@ Resources:
   S3ReadOnlyInstanceProfile:
     Type: AWS::IAM::InstanceProfile
     Properties: 
-      Roles: S3ReadOnlyAccessRole
+      Roles:
+        - S3ReadOnlyAccessRole
   
   WebAppLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
@@ -169,9 +170,9 @@ Resources:
       ImageId: !Ref AmiId
       IamInstanceProfile: !Ref S3ReadOnlyInstanceProfile
       SecurityGroupIds:
-        - !Ref HTTPSecurityGroup
-        - !Ref SSHSecurityGroup
-        - !Ref ServerUpdatesSG
+        - !GetAtt "HTTPSecurityGroup.GroupId"
+        - !GetAtt "SSHSecurityGroup.GroupId"
+        - !GetAtt "ServerUpdatesSG.GroupId"
       InstanceType: !Ref InstanceType
       BlockDeviceMappings:
       - DeviceName: "/dev/sdk"
