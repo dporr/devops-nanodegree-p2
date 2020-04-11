@@ -14,7 +14,7 @@ Parameters:
   AmiId:
     Description: AMI id. Default ubuntu 18.04 LTS
     Type: String
-    Default: ami-005bdb005fb00e791
+    Default: ami-0fc20dd1da406780b
 
 Resources:
   HTTPSecurityGroup:
@@ -151,7 +151,7 @@ Resources:
     Type: AWS::IAM::InstanceProfile
     Properties: 
       Roles:
-        - S3ReadOnlyAccessRole
+        - S3ReadOnlyAccessRole  
   
   WebAppLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
@@ -169,10 +169,10 @@ Resources:
           echo "Success!" > checkstatus.html
       ImageId: !Ref AmiId
       IamInstanceProfile: !Ref S3ReadOnlyInstanceProfile
-      SecurityGroupIds:
-        - !GetAtt "HTTPSecurityGroup.GroupId"
-        - !GetAtt "SSHSecurityGroup.GroupId"
-        - !GetAtt "ServerUpdatesSG.GroupId"
+      SecurityGroups:
+        - !Ref HTTPSecurityGroup
+        - !Ref SSHSecurityGroup
+        - !Ref ServerUpdatesSG
       InstanceType: !Ref InstanceType
       BlockDeviceMappings:
       - DeviceName: "/dev/sdk"
