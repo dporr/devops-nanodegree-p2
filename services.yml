@@ -10,7 +10,7 @@ Parameters:
   InstanceType:
     Description: Instance type for ec2 resource allocation
     Type: String
-    Default: t3.micro
+    Default: t3.medium
   AmiId:
     Description: AMI id. Default ubuntu 18.04 LTS
     Type: String
